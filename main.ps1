@@ -127,7 +127,6 @@ function Set-ConfigureDisplay {
 	Write-Host "..Display Configured.`n"
 }
 
-
 # Initialize program
 function script-InitializationCode {
 	Clear-Host
@@ -143,11 +142,10 @@ function script-InitializationCode {
 function script-FinalizationCode {
     Clear-Host
 	Show-Header
-    Write-Host "`n....Powershell Script Exiting.`n"
+    Write-Host "....Powershell Script Exiting.`n"
     Start-Sleep -Seconds 2
 	exit
 }
-
 
 # Entry point
 script-InitializationCode
