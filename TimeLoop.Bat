@@ -9,7 +9,7 @@ echo =================( TimeLoop )=================
 echo.
 cd /d "%~dp0"
 color 80
-title TimerRepeat-Ps
+title TimeLoop
 timeout /t 1 /nobreak >nul
 echo Launcher Initialized...
 echo.
