@@ -1,7 +1,6 @@
 # TimeLoop
 ### Status
-Working. Completed.
-
+Working. Further development possible.
 
 ##
 ### Description
@@ -99,6 +98,10 @@ Usage Guide for TimeLoop:
 
 ### Notation
 - Use a target entry like this `cmd.exe /c "D:\ParentFolders\TimeLoop\TimeLoop.Bat"` in your shortcut if you want to put it on the taskbar for easy access.
+
+##
+### Development
+- Requires re-brand to "TimeBar". Affected: Code referencess, ascii art, display configuration, filenames, documentation, batch code.
 
 ##
 ### Disclaimer
