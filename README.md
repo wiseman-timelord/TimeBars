@@ -1,8 +1,11 @@
 # TimeLoop
-A timer program, for management of timing of breaks while on the computer.
+### Status
+Working. Its a quick jobbie, though will be perfected over time, main point is it works.
 
-...To be detailed.
 
+##
+### Description
+TimeLoop is a versatile timer application that allows users to select predefined timer durations ranging from 1 minute to 2 hours. It's designed for users who need to manage their time effectively while working on tasks, offering a simple and interactive way to set reminders or breaks.
 
 ## Preview
 - The Main Menu...
