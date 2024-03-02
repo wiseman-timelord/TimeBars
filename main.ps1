@@ -20,7 +20,7 @@ function Start-Timer {
         # Updated display method
         $status = "Timer Running..."
         $currentOperation = "Elapsed: $($elapsed.ToString('hh\:mm\:ss')) - Remaining: $($remaining.ToString('hh\:mm\:ss'))"
-        $progressBar = '[' + '█' * [Math]::Round($percentComplete / 2) + ' ' * (40 - [Math]::Round($percentComplete / 2)) + ']'
+        $progressBar = '[' + '█' * [Math]::Round($percentComplete / 2.5) + ' ' * (40 - [Math]::Round($percentComplete / 2.5)) + ']'
         Write-Host "$status`n"
 		Write-Host "`n`n`n`n`n   $currentOperation`n"
         Write-Host "  $progressBar"
