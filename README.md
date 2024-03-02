@@ -4,12 +4,13 @@ Working. Its a quick jobbie, though will be perfected over time, main point is i
 
 ##
 ### Description
-TimeLoop is a versatile timer application that allows users to select predefined timer durations ranging from 1 minute to 2 hours, it is intended as 1 better than the logical, maximum and minimum, times for a break period. It's designed for users who need to manage their time effectively while having a break from tasks, through a, simple and interactive, method. At the end of the timer is a "Timer Over!" screen with a, fitting and non-annoying, 5 bleep alarm sound played once. Optimally one would have this on the second screen while playing "Fallout 4" or whatever is your thing. It also uses extremely low system resources, because I made the update timer 5 seconds during the timer phase, hence a smidgin more power for your gaming, if thats what you are doing in your break.
+TimeLoop is a versatile timer application that allows users to select predefined timer durations ranging from 1 minute to 2 hours, it is intended as 1 better than the logical, maximum and minimum, times for a break period. It's designed for users who need to manage their time effectively while having a break from tasks, through a, simple and interactive, method. At the end of the timer is a "Timer Over!" screen with a, fitting and non-annoying, 5 bleep alarm sound played once. Optimally one would have this on the second screen while playing "Fallout 4" or whatever is your thing.
 
 ### Feautes
 - **Customizable Timer Durations:** Offers a selection of predefined timer durations ranging from 1 minute to 2 hours, allowing users to choose the most suitable length for their tasks.
 - **Real-time Timer Progress Display:** Updates the console in real-time with a progress bar, elapsed time, and remaining time, providing visual feedback during the countdown.
 - **Audible and Visual, Notification:** Plays a sound and displays a message when the timer concludes, ensuring users are promptly notified.
+- **Low Resource Usage:** The update timer is 5 seconds during the timer phase, so there should be less, crashes & performance issues, if & while, gaming. 
 
 ### Preview
 - The Main Menu...
