@@ -1,8 +1,7 @@
 # TimeLoop
 ### Status
-Working. Some further development remaining, works already as intended...
-- Function for initialization and display configuration.
-- Function for proper exit procedure. 
+Working. Completed.
+
 
 ##
 ### Description
@@ -12,7 +11,8 @@ TimeLoop is a versatile timer application that allows users to select predefined
 - **Customizable Timer Durations:** Offers a selection of predefined timer durations ranging from 1 minute to 2 hours, allowing users to choose the most suitable length for their tasks.
 - **Real-time Timer Progress Display:** Updates the console in real-time with a progress bar, elapsed time, and remaining time, providing visual feedback during the countdown.
 - **Audible and Visual, Notification:** Plays a sound and displays a message when the timer concludes, ensuring users are promptly notified.
-- **Low Resource Usage:** The update timer is 5 seconds during the timer phase, so as to use minimal processing resources. 
+- **Low Resource Usage:** The update timer is 5 seconds during the timer phase, so as to use minimal processing resources.
+- **Initialization & Exit, Procedures:** Initialization  with disaplay configuratio and Exit screen.
 
 ### Preview
 - The Main Menu...
