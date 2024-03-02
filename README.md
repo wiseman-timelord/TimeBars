@@ -1,6 +1,8 @@
 # TimeLoop
 ### Status
-Working. Some further development remaining, works already as intended.
+Working. Some further development remaining, works already as intended...
+- Function for initialization and display configuration.
+- Function for proper exit procedure. 
 
 ##
 ### Description
