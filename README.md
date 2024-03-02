@@ -101,7 +101,7 @@ Usage Guide for TimeLoop:
 
 ##
 ### Development
-- Requires re-brand to "TimeBar". Affected: Code referencess, ascii art, display configuration, filenames, documentation, batch code.
+- Requires re-brand to "TimeBar" before release. Affected: Code referencess, ascii art, display configuration, filenames, documentation, batch code.
 
 ##
 ### Disclaimer
