@@ -73,6 +73,9 @@ Usage Guide for TimeLoop:
 3.  Monitor the real-time progress through the displayed progress bar and time information.
 4. Listen for the audible alert and observe the "Timer Over!" message, then choose 'R' to repeat, 'M' for the main menu, or 'X' to exit.
 
+### Notation
+- Use a target entry like this `cmd.exe /c "D:\ParentFolders\TimeLoop\TimeLoop.Bat"` in your shortcut if you want to put it on the taskbar for easy access.
+
 ##
 ### Disclaimer
 This software is subject to the terms in License.Txt, covering usage, distribution, and modifications. For full details on your rights and obligations, refer to License.Txt.
