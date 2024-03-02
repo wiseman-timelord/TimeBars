@@ -17,7 +17,6 @@ TimeLoop is a versatile timer application that allows users to select predefined
 ### Preview
 - The Main Menu...
 ```
-
 =================( TimeLoop )=================
 
 
@@ -43,7 +42,6 @@ Select, Options = 1-7, Exit = X:
 ```
 - The 1 Minute Timer (test timer)...
 ```
-
 =================( TimeLoop )=================
 
 Timer Running...
@@ -69,7 +67,6 @@ Timer Running...
 ```
 - Event "Timer Over"...
 ```
-
 =================( TimeLoop )=================
 
 
