@@ -1,6 +1,6 @@
 # TimeLoop
 ### Status
-Working. Its a quick jobbie, though will be perfected over time, main point is it works.
+Working. Some further development remaining, works already as intended.
 
 ##
 ### Description
