@@ -7,6 +7,26 @@ function Show-Header {
     Write-Host "`n=================( TimeLoop )=================`n"
 }
 
+function Show-TimerOverScreen {
+    param([TimeSpan]$Duration)
+
+    Show-Header
+    Write-Host "`n`n`n`n`n`n`n                 Timer Over!`n`n`n`n`n`n`n"
+    Show-Divider
+    # Play sound
+    $player = New-Object System.Media.SoundPlayer ".\sounds\alarm-bleep.wav"
+    $player.PlaySync()
+
+    $action = Read-Host "Select, Repeat = R, Menu = M, Exit = X"
+    switch ($action) {
+        "R" { Start-Timer -Duration $Duration }
+        "M" { Show-Menu }
+        "X" { return }
+        default { Write-Host "Invalid option, please try again."; Start-Sleep -Seconds 2; Show-TimerOverScreen -Duration $Duration }
+    }
+}
+
+
 function Start-Timer {
     param([TimeSpan]$Duration)
     
@@ -17,37 +37,32 @@ function Start-Timer {
         $remaining = $endTime - (Get-Date)
         $percentComplete = (($elapsed.TotalSeconds) / $Duration.TotalSeconds) * 100
 
-        # Updated display method
         $status = "Timer Running..."
         $currentOperation = "Elapsed: $($elapsed.ToString('hh\:mm\:ss')) - Remaining: $($remaining.ToString('hh\:mm\:ss'))"
         $progressBar = '[' + '█' * [Math]::Round($percentComplete / 2.5) + ' ' * (40 - [Math]::Round($percentComplete / 2.5)) + ']'
         Write-Host "$status`n"
-		Write-Host "`n`n`n`n`n   $currentOperation`n"
-        Write-Host "  $progressBar"
-
+        Write-Host "`n`n`n`n   $currentOperation`n"
+        Write-Host "  $progressBar`n`n`n`n`n`n"
+		Show-Divider
         Start-Sleep -Seconds 5
     }
     
-    Show-Header
-    Write-Host "`n`n`n                                             Timer Over!"
-    Show-Divider
-    $action = Read-Host "Select, Menu = M, Exit = X: "
-    if ($action -eq 'M') {
-        Show-Menu
-    }
+    Show-TimerOverScreen -Duration $Duration
 }
+
 
 function Show-Menu {
     do {
         Show-Header
-        Write-Host "`n`n             1. 2 Hours Timer`n"
+        Write-Host "`n             1. 2 Hours Timer`n"
         Write-Host "             2. 1 Hour Timer`n"
         Write-Host "             3. 30 Minutes Timer`n"
         Write-Host "             4. 15 Minutes Timer`n"
         Write-Host "             5. 10 Minutes Timer`n"
-        Write-Host "             6. 5 Minutes Timer`n`n"
+        Write-Host "             6. 5 Minutes Timer`n"
+		Write-Host "             7. 1 Minute Timer`n"
         Show-Divider
-        $choice = Read-Host "Select, Options = 1-6, Exit = X"
+        $choice = Read-Host "Select, Options = 1-7, Exit = X"
         switch ($choice) {
             "1" {
                 Write-Host "Starting 2H Timer..."
@@ -78,6 +93,11 @@ function Show-Menu {
                 Write-Host "Starting 5M Timer..."
                 Start-Sleep -Seconds 2
                 $duration = [TimeSpan]::FromMinutes(5)
+            }
+            "7" {
+                Write-Host "Starting 1M Timer..."
+                Start-Sleep -Seconds 2
+                $duration = [TimeSpan]::FromMinutes(1)
             }
             "X" {
                 Write-Host "Exiting Program..."
