@@ -48,22 +48,48 @@ function Show-Menu {
         Write-Host "             6. 5 Minutes Timer`n`n"
         Show-Divider
         $choice = Read-Host "Select, Options = 1-6, Exit = X"
-
-        $duration = switch ($choice) {
-            "1" {[TimeSpan]::FromHours(2)}
-            "2" {[TimeSpan]::FromHours(1)}
-            "3" {[TimeSpan]::FromMinutes(30)}
-            "4" {[TimeSpan]::FromMinutes(15)}
-            "5" {[TimeSpan]::FromMinutes(10)}
-            "6" {[TimeSpan]::FromMinutes(5)}
-            "X" {break}
+        switch ($choice) {
+            "1" {
+                Write-Host "Starting 2H Timer..."
+                Start-Sleep -Seconds 2
+                $duration = [TimeSpan]::FromHours(2)
+            }
+            "2" {
+                Write-Host "Starting 1H Timer..."
+                Start-Sleep -Seconds 2
+                $duration = [TimeSpan]::FromHours(1)
+            }
+            "3" {
+                Write-Host "Starting 30M Timer..."
+                Start-Sleep -Seconds 2
+                $duration = [TimeSpan]::FromMinutes(30)
+            }
+            "4" {
+                Write-Host "Starting 15M Timer..."
+                Start-Sleep -Seconds 2
+                $duration = [TimeSpan]::FromMinutes(15)
+            }
+            "5" {
+                Write-Host "Starting 10M Timer..."
+                Start-Sleep -Seconds 2
+                $duration = [TimeSpan]::FromMinutes(10)
+            }
+            "6" {
+                Write-Host "Starting 5M Timer..."
+                Start-Sleep -Seconds 2
+                $duration = [TimeSpan]::FromMinutes(5)
+            }
+            "X" {
+                Write-Host "Exiting Program..."
+                Start-Sleep -Seconds 2
+                break
+            }
             default {
                 Write-Host "Invalid option, please try again."
                 Start-Sleep -Seconds 2
                 continue
             }
         }
-
         if ($choice -ne "X") {
             Start-Timer -Duration $duration
         }
