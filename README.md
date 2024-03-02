@@ -67,6 +67,31 @@ Timer Running...
 
 
 ```
+- Event "Timer Over"...
+```
+
+=================( TimeLoop )=================
+
+
+
+
+
+
+
+
+                 Timer Over!
+
+
+
+
+
+
+
+
+----------------------------------------------
+Select, Repeat = R, Menu = M, Exit = X:
+
+```
 
 ##
 ### Usage 
