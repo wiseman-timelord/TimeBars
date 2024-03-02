@@ -31,7 +31,7 @@ Select, Options = 1-7, Exit = X:
 
 
 ```
-- The 5 Minute Timer...
+- The 1 Minute Timer (test timer)...
 ```
 
 =================( TimeLoop )=================
@@ -42,10 +42,10 @@ Timer Running...
 
 
 
+   Elapsed: 00:00:30 - Remaining: 00:00:29
 
-   Elapsed: 00:00:00 - Remaining: 00:00:59
+  [████████████████████                    ]
 
-  [                                        ]
 
 
 
