@@ -11,7 +11,6 @@ A timer program, for management of timing of breaks while on the computer.
 =================( TimeLoop )=================
 
 
-
              1. 2 Hours Timer
 
              2. 1 Hour Timer
@@ -24,10 +23,11 @@ A timer program, for management of timing of breaks while on the computer.
 
              6. 5 Minutes Timer
 
+             7. 1 Minute Timer
 
 
 ----------------------------------------------
-Select, Options = 1-6, Exit = X:
+Select, Options = 1-7, Exit = X:
 
 
 ```
@@ -43,15 +43,16 @@ Timer Running...
 
 
 
-   Elapsed: 00:03:06 - Remaining: 00:01:53
+   Elapsed: 00:00:00 - Remaining: 00:00:59
 
-  [███████████████████████████████         ]
-
-
+  [                                        ]
 
 
 
 
+
+
+----------------------------------------------
 
 
 
