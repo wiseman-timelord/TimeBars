@@ -116,4 +116,41 @@ function Show-Menu {
     } while ($choice -ne "X")
 }
 
+# Sets the window title, size, and console properties for display configuration
+function Set-ConfigureDisplay {
+    Write-Host "Display Configuration.."
+    [Console]::ForegroundColor = [ConsoleColor]::White
+    [Console]::BackgroundColor = [ConsoleColor]::DarkGray
+	[Console]::Clear()
+    Show-Header
+    Write-Host "Display Configuration.."
+	Write-Host "..Display Configured.`n"
+}
+
+
+# Initialize program
+function script-InitializationCode {
+	Clear-Host
+	Show-Header
+	Start-Sleep -Seconds 1
+	Set-ConfigureDisplay
+	Start-Sleep -Seconds 1
+	Write-Host "Powershell Script Initialized...`n"
+    Start-Sleep -Seconds 2
+}
+
+# Exit Program
+function script-FinalizationCode {
+    Clear-Host
+	Show-Header
+    Write-Host "`n....Powershell Script Exiting.`n"
+    Start-Sleep -Seconds 2
+	exit
+}
+
+
+# Entry point
+script-InitializationCode
 Show-Menu
+script-FinalizationCode
+
