@@ -12,7 +12,6 @@ TimeLoop is a versatile timer application that allows users to select predefined
 - **Real-time Timer Progress Display:** Updates the console in real-time with a progress bar, elapsed time, and remaining time, providing visual feedback during the countdown.
 - **Audible and Visual, Notification:** Plays a sound and displays a message when the timer concludes, ensuring users are promptly notified.
 - **Low Resource Usage:** The update timer is 5 seconds during the timer phase, so as to use minimal processing resources.
-- **Initialization & Exit, Procedures:** Initialization  with disaplay configuratio and Exit screen.
 
 ### Preview
 - The Main Menu...
