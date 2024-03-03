@@ -91,7 +91,7 @@ Usage Guide for TimeBars:
 4. Listen for the audible alert and observe the "Timer Over!" message, then choose 'R' to repeat, 'M' for the main menu, or 'X' to exit.
 
 ### Notation
-- Use a target entry like this `cmd.exe /c "D:\ParentFolders\TimeBars\TimeBars.Bat"` in your shortcut if you want to put it on the taskbar for easy access.
+- Use a "Target" field entry like this `cmd.exe /c "DRIVE:\**ParentFolders**\TimeBars\TimeBars.Bat"` in your shortcut if you want to put it on the taskbar for easy access.
 
 ##
 ### Disclaimer
