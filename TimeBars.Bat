@@ -3,7 +3,7 @@ REM Script: TimeLoop-Ps.Bat
 @echo off
 
 :: Initialization
-mode con cols=46 lines=21
+mode con cols=46 lines=17
 echo.
 echo =================( TimeBars )=================
 echo.
@@ -27,12 +27,8 @@ echo.
 echo =================( TimeBars )=================
 echo.
 echo.
-echo.
-echo              1. Run TimeLoop
-echo.
+echo              1. Run TimeBars
 echo              2. Check Integrity
-echo.
-echo.
 echo.
 echo.
 echo ----------------------------------------------
@@ -88,6 +84,7 @@ echo Checking Script Files..
 set missing=0
 timeout /t 1 /nobreak >nul
 if not exist ".\main.ps1" set missing=1
+if not exist ".\scripts\display.ps1" set missing=1
 if %missing%==1 (
     echo ..Failure, Re-Install Program!
 ) else (
