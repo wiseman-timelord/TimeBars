@@ -80,13 +80,13 @@ Press any key to continue . . .
 ```
 
 ### System Requirements 
-- Windows 10/11 - For full functionality.
-- Python 3.10+ - A modern version of python.
-- 50MB disk space - Estimated by AI.
+- Windows 10/11 - For full functionality of the built-in browser.
+- Python 3.10+ - A modern version of python, the version tested with was v3.12.4.
+- 50MB disk space - AI.
 - Sound Output - for bleeps.
 
 ### Installation
-1. Ensure Python 3.10 or higher is installed.
+1. Ensure Python v3.10 or higher is installed.
 2. Run `python installer.py` to set up the virtual environment and dependencies.
 3. The installer will create `data/alarm-bleep.wav` and `data/persistent.json` automatically.
 
