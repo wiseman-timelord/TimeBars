@@ -8,9 +8,7 @@ import subprocess
 import sys
 import os
 import json
-import struct
-import wave
-import math
+import shutil
 from pathlib import Path
 
 
@@ -25,14 +23,23 @@ def check_python_version() -> bool:
         return False
 
 
-def create_venv(venv_path: Path) -> bool:
-    """Create a virtual environment."""
+def get_venv_python(venv_path: Path) -> Path:
+    """Get the path to the venv Python executable."""
+    if os.name == 'nt':  # Windows
+        return venv_path / "Scripts" / "python.exe"
+    else:  # Unix
+        return venv_path / "bin" / "python"
+
+
+def purge_and_create_venv(venv_path: Path) -> bool:
+    """Remove existing venv and create fresh one."""
     try:
         if venv_path.exists():
-            print("Virtual environment already exists, skipping creation.")
-            return True
+            print("Purging existing virtual environment...")
+            shutil.rmtree(venv_path, ignore_errors=True)
+            print("Old venv purged.")
         
-        print("Creating virtual environment...")
+        print("Creating fresh virtual environment...")
         subprocess.run(
             [sys.executable, "-m", "venv", str(venv_path)],
             check=True,
@@ -43,14 +50,6 @@ def create_venv(venv_path: Path) -> bool:
     except subprocess.CalledProcessError as e:
         print(f"FAILED: Could not create venv: {e}")
         return False
-
-
-def get_venv_python(venv_path: Path) -> Path:
-    """Get the path to the venv Python executable."""
-    if os.name == 'nt':  # Windows
-        return venv_path / "Scripts" / "python.exe"
-    else:  # Unix
-        return venv_path / "bin" / "python"
 
 
 def upgrade_pip(venv_python: Path) -> bool:
@@ -71,12 +70,10 @@ def upgrade_pip(venv_python: Path) -> bool:
 
 def install_requirements(venv_python: Path) -> bool:
     """Install required packages."""
-    # Requirements embedded directly
-    # pywebview with EdgeChromium support for Windows
     requirements = [
         "nicegui>=1.4.0",
         "pywebview>=5.0",
-        "pythonnet",  # Required for EdgeChromium on Windows
+        "pythonnet",
     ]
     
     try:
@@ -121,6 +118,8 @@ def create_persistent_json(json_path: Path) -> bool:
         
         if json_path.exists():
             print("Replacing existing persistent.json with fresh default.")
+        else:
+            print("Creating persistent.json...")
         
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(default_data, f, indent=2)
@@ -129,59 +128,6 @@ def create_persistent_json(json_path: Path) -> bool:
         return True
     except Exception as e:
         print(f"FAILED: Could not create persistent.json: {e}")
-        return False
-
-
-def generate_alarm_sound(wav_path: Path) -> bool:
-    """Generate a simple alarm beep WAV file."""
-    try:
-        if wav_path.exists():
-            print("alarm-bleep.wav already exists, skipping generation.")
-            return True
-        
-        # Audio parameters
-        sample_rate = 44100
-        duration = 0.15  # seconds per beep
-        frequency = 880  # Hz (A5 note)
-        volume = 0.7
-        
-        # Generate a beep pattern: beep-pause-beep-pause-beep
-        beep_samples = int(sample_rate * duration)
-        pause_samples = int(sample_rate * 0.1)
-        
-        samples = []
-        
-        for beep_num in range(3):
-            # Generate beep
-            for i in range(beep_samples):
-                t = i / sample_rate
-                # Sine wave with envelope
-                envelope = min(1.0, min(i / 500, (beep_samples - i) / 500))
-                value = volume * envelope * (
-                    0.6 * math.sin(2 * math.pi * frequency * t) +
-                    0.3 * math.sin(2 * math.pi * frequency * 2 * t) +
-                    0.1 * math.sin(2 * math.pi * frequency * 3 * t)
-                )
-                samples.append(int(value * 32767))
-            
-            # Add pause between beeps (except after last)
-            if beep_num < 2:
-                samples.extend([0] * pause_samples)
-        
-        # Write WAV file
-        with wave.open(str(wav_path), 'w') as wav_file:
-            wav_file.setnchannels(1)  # Mono
-            wav_file.setsampwidth(2)  # 2 bytes per sample
-            wav_file.setframerate(sample_rate)
-            
-            # Pack samples as 16-bit signed integers
-            packed = struct.pack('<' + 'h' * len(samples), *samples)
-            wav_file.writeframes(packed)
-        
-        print("alarm-bleep.wav generated.")
-        return True
-    except Exception as e:
-        print(f"FAILED: Could not generate alarm sound: {e}")
         return False
 
 
@@ -198,27 +144,22 @@ def create_scripts_directory(scripts_path: Path) -> bool:
 
 def main() -> int:
     """Main installer function."""
-    # Get base path (directory containing this script)
     base_path = Path(__file__).parent.resolve()
     
-    # Define paths
     venv_path = base_path / "venv"
     data_path = base_path / "data"
     scripts_path = base_path / "scripts"
     json_path = data_path / "persistent.json"
-    wav_path = data_path / "alarm-bleep.wav"
     
     print(f"Install location: {base_path}")
     
-    # Check Python version
     if not check_python_version():
         return 1
     
-    # Create virtual environment
-    if not create_venv(venv_path):
+    # Always purge and recreate venv
+    if not purge_and_create_venv(venv_path):
         return 1
     
-    # Get venv Python and upgrade pip
     venv_python = get_venv_python(venv_path)
     if not venv_python.exists():
         print("FAILED: Virtual environment Python not found.")
@@ -226,26 +167,23 @@ def main() -> int:
     if not upgrade_pip(venv_python):
         return 1
     
-    # Install requirements
+    print("Installing dependencies...")
     if not install_requirements(venv_python):
         return 1
     
-    # Create directories
     print("Creating directories...")
     if not create_data_directory(data_path):
         return 1
     if not create_scripts_directory(scripts_path):
         return 1
     
-    # Create data files
     print("Creating data files...")
     if not create_persistent_json(json_path):
-        return 1
-    if not generate_alarm_sound(wav_path):
         return 1
     
     print()
     print("Installation Complete!")
+    print("You can now run the program.")
     
     return 0
 
