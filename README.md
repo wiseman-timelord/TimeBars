@@ -80,7 +80,7 @@ Press any key to continue . . .
 ```
 
 ### System Requirements 
-- Windows 10/11 - Its made/tested on 10, but supposedly if you have 7-8.1 it will fallback to system browser.
+- Windows 10/11 - For full functionality.
 - Python 3.10+ - A modern version of python.
 - 50MB disk space - Estimated by AI.
 - Sound Output - for bleeps.
@@ -120,9 +120,9 @@ TimeBars/
 ```
 
 ### Notation
-- Create a shortcut with Target: `python.exe "DRIVE:\**ParentFolders**\TimeBars\program.py"` for taskbar pinning.
+- Its made/tested on 10, but supposedly if you have 7-8.1 it will fallback to system browser.
 - The application runs in a native window but uses web technologies—no browser required.
-- Timer data auto-saves when the application closes normally.
+- Timer data auto-saves when the application closes through [x] on top right, and loads timers on start..
 
 ### Disclaimer
 This software is subject to the terms in License.Txt, covering usage, distribution, and modifications. For full details on your rights and obligations, refer to License.Txt.
