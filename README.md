@@ -1,89 +1,64 @@
 # TimeBars
-### Status
-Working. Completed.
+Status: Release - Working.
 
-##
 ### Description
-TimeBars is a versatile timer application that allows users to select predefined timer durations ranging from 1 minute to 2 hours, it is intended as 1 better than the logical, maximum and minimum, times for a break period. It's designed for users who need to manage their time effectively while having a break from tasks, through a, simple and interactive, method. At the end of the timer is a "Timer Over!" screen with a, fitting and non-annoying, 5 bleep alarm sound played once. Optimally one would have this on the second screen while playing "Fallout 4" or whatever is your thing.
+TimeBars is a versatile timer application featuring a modern GUI interface that allows users to create and manage a sequential queue of custom timers. It's designed for users who need to manage complex time intervals effectively—whether for work sprints, break periods, cooking stages, or gaming sessions. Each timer can be individually labeled, customized with precise durations, and set to trigger an audible and visual alarm upon completion. Optimally one would have this on a second screen while playing "Fallout 4" or whatever is your thing.
 
-### Feautes
-- **Customizable Timer Durations:** Offers a selection of predefined timer durations ranging from 1 minute to 2 hours, allowing users to choose the most suitable length for their tasks.
-- **Real-time Timer Progress Display:** Updates the console in real-time with a progress bar, elapsed time, and remaining time, providing visual feedback during the countdown.
-- **Audible and Visual, Notification:** Plays a sound and displays a message when the timer concludes, ensuring users are promptly notified.
-- **Low Resource Usage:** The update timer is 5 seconds during the timer phase, so as to use minimal processing resources.
-- **Shutdown Option:** If you run TimeBars in Admin mode, then the option to toggle a Shutdown at the end of the timer, will then be available.
+### Features
+- **Custom Timer Queue:** Create multiple named timers with custom durations that run sequentially in a managed queue.
+- **Flexible Duration Input:** Enter time as HH:MM or HHMM format (e.g., "1:30" or "90" for 90 minutes) with no preset limitations.
+- **Persistent Timer State:** Your timer queue is automatically saved and restored between sessions.
+- **Real-time Visual Progress:** Live progress bars and countdown displays (HH:MM:SS) for each timer in the queue.
+- **Per-Timer Alarm Control:** Enable or disable the alarm individually for each timer as needed.
+- **Audible and Visual Notification:** Plays a custom 3-bleep alarm sound and flashes the timer card red when complete.
+- **Interactive Controls:** Start, Pause, Stop, and Clear All functions with status indicators.
+- **Interface Zoom:** Hold Ctrl and scroll to resize the interface (50% - 200%) for accessibility.
+- **Modern Web-Based UI:** Clean, dark-themed interface using native system webview (Edge on Windows).
+- **Automatic Dependency Management:** Installer handles virtual environment and all requirements automatically.
 
-### Preview
-- The Main Menu...
-```
-=================( TimeBars )=================
+### Installation
+1. Ensure Python 3.10 or higher is installed.
+2. Run `python installer.py` to set up the virtual environment and dependencies.
+3. The installer will create `data/alarm-bleep.wav` and `data/persistent.json` automatically.
 
-             1. 2 Hours Timer
-             2. 1 Hour Timer
-             3. 30 Minutes Timer
-             4. 15 Minutes Timer
-             5. 10 Minutes Timer
-             6. 5 Minutes Timer
-             7. 1 Minute Timer
-
-            Shutdown: Optional
-
-----------------------------------------------
-Select, Options=1-7, Shutdown=S, Exit=X:
-
-
-```
-- The 1 Minute Timer (test timer)...
-```
-=================( TimeBars )=================
-
-
-                Timer Running..
-
-
-   Elapsed: 00:00:30 - Remaining: 00:00:29
-
-  [████████████████████                    ]
-
-
-
-----------------------------------------------
-
-
-
-```
-- Event "Timer Over"...
-```
-=================( TimeBars )=================
-
-
-
-
-
-                 Timer Over!
-
-
-
-
-
-----------------------------------------------
-Select, Repeat = R, Menu = M, Exit = X:
-
-
-```
-
-##
 ### Usage 
 Usage Guide for TimeBars:
-1. Run the Batch launcher "TimeBars.Bat" to run the program (ensure to run as Administrator for Shutdown feature).  
-2. Enter the number corresponding to your desired timer duration (1-7) or 'X' to exit.
-3.  Monitor the real-time progress through the displayed progress bar and time information.
-4. Listen for the audible alert and observe the "Timer Over!" message, then choose 'R' to repeat, 'M' for the main menu, or 'X' to exit.
+1. Run `python program.py` to launch the application (or create a shortcut to it).
+2. Enter a **Label** for your timer (e.g., "Coffee Break").
+3. Enter **Duration** in HH:MM or HHMM format (e.g., "0:15", "15", "1:30", "90").
+4. Check/uncheck **Enable Alarm** as desired.
+5. Click **Add Timer** to append it to the queue.
+6. Repeat steps 2-5 to build your timer sequence.
+7. Click **Start** to begin the countdown queue.
+8. Use **Pause** to temporarily halt, **Stop** to reset, or **Clear All** to empty the queue.
+9. Completed timers automatically disappear after their 5-second alarm phase.
 
+### System Requirements
+- Windows 10/11 (for native Edge WebView2 support) or Linux/macOS (browser fallback)
+- Python 3.10+
+- 50MB disk space
+
+### File Structure
+```
+TimeBars/
+├── installer.py          # First-time setup (venv, deps, data files)
+├── program.py            # Main entry point
+├── scripts/
+│   ├── init.py
+│   ├── interface.py      # GUI implementation (NiceGUI)
+│   ├── timers.py         # Timer engine and state management
+│   ├── config.py         # Persistence and settings
+│   └── utility.py        # Audio playback
+├── data/
+│   ├── persistent.json   # Saved timer queue and settings
+│   └── alarm-bleep.wav   # Generated alarm sound
+└── venv/                 # Virtual environment (created by installer)
+```
 
 ### Notation
-- Use a "Target" field entry like this `cmd.exe /c "DRIVE:\**ParentFolders**\TimeBars\TimeBars.Bat"` in your shortcut if you want to put it on the taskbar for easy access.
+- Create a shortcut with Target: `python.exe "DRIVE:\**ParentFolders**\TimeBars\program.py"` for taskbar pinning.
+- The application runs in a native window but uses web technologies—no browser required.
+- Timer data auto-saves when the application closes normally.
 
-##
 ### Disclaimer
 This software is subject to the terms in License.Txt, covering usage, distribution, and modifications. For full details on your rights and obligations, refer to License.Txt.
