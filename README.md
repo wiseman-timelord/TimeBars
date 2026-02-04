@@ -92,7 +92,7 @@ Press any key to continue . . .
 
 ### Usage 
 Usage Guide for TimeBars:
-1. Run `python program.py` to launch the application (or create a shortcut to it).
+1. Run `TimeBars.bat` to launch the application.
 2. Enter a **Label** for your timer (e.g., "Coffee Break").
 3. Enter **Duration** in HH:MM or HHMM format (e.g., "0:15", "15", "1:30", "90").
 4. Check/uncheck **Enable Alarm** as desired.
