@@ -16,6 +16,75 @@ TimeBars is a versatile timer application featuring a modern GUI interface that 
 - **Modern Web-Based UI:** Clean, dark-themed interface using native system webview (Edge on Windows).
 - **Automatic Dependency Management:** Installer handles virtual environment and all requirements automatically.
 
+### Preview
+- 
+# ![main_windows](media/interface.jpg)
+- There is a nice batch menu to, install or launch...
+```
+=============================================================================
+                  _____ _                ____
+                 |_   _<_>________   ___| __ >  ____ _______
+                   | | | |  _   _ \ / _ \  _ \ / _  |  _/ __|
+                   | | | | | | | | |  __/ |_> | <_| | | \__ \
+                   |_| |_|_| |_| |_|\___|____/ \____|_| |___/
+
+=============================================================================
+
+
+
+
+
+    1. Run Program
+
+    2. Run Installer
+
+
+
+
+
+=============================================================================
+Selection; Menu Options = 1-2, Exit Program = X:
+
+```
+- The installer isnt too shabby...
+```
+=============================================================================
+    TimeBars: Running Installer
+=============================================================================
+
+Detected Python version: 3.12.4
+
+Install location: C:\Program_Files\TimeBars\TimeBars
+Python version: 3.12.4
+Virtual environment already exists, skipping creation.
+Upgrading pip...
+Pip upgraded.
+Installing dependencies...
+  nicegui>=1.4.0
+  pywebview>=5.0
+  pythonnet
+Dependencies installed.
+Creating directories...
+Data directory ready.
+Scripts directory ready.
+Creating data files...
+Replacing existing persistent.json with fresh default.
+persistent.json created.
+alarm-bleep.wav already exists, skipping generation.
+
+Installation Complete!
+
+Installation complete
+
+Press any key to continue . . .
+```
+
+### System Requirements 
+- Windows 10/11 - Its made/tested on 10, but supposedly if you have 7-8.1 it will fallback to system browser.
+- Python 3.10+ - A modern version of python.
+- 50MB disk space - Estimated by AI.
+- Sound Output - for bleeps.
+
 ### Installation
 1. Ensure Python 3.10 or higher is installed.
 2. Run `python installer.py` to set up the virtual environment and dependencies.
@@ -32,11 +101,6 @@ Usage Guide for TimeBars:
 7. Click **Start** to begin the countdown queue.
 8. Use **Pause** to temporarily halt, **Stop** to reset, or **Clear All** to empty the queue.
 9. Completed timers automatically disappear after their 5-second alarm phase.
-
-### System Requirements
-- Windows 10/11 (for native Edge WebView2 support) or Linux/macOS (browser fallback)
-- Python 3.10+
-- 50MB disk space
 
 ### File Structure
 ```
