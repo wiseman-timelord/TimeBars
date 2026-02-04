@@ -46,7 +46,7 @@ def main() -> int:
     data_path = base_path / "data"
     
     if is_main:
-        logger.info(f"Data path: {data_path}")
+        print(f"Data path: {data_path}")
     
     # Ensure data directory exists
     data_path.mkdir(parents=True, exist_ok=True)
