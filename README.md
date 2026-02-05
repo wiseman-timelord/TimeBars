@@ -92,8 +92,8 @@ Press any key to continue . . .
 
 ### Usage 
 Usage Guide for TimeBars:
-1. If already installed, then run `TimeBars.bat` to launch the application, and select run program from the menu.
-2. Hold Ctrl + Mouse Wheel to resize UI, as well as move borders, this is not perfect yet, but enable scale for setting more timers.
+1. If already installed, then right click then run as admin on `TimeBars.bat` to launch batch menu, and select run program from the menu.
+2. Wait for Ui load, Hold Ctrl + Mouse Wheel to resize UI, as well as move borders, this is not perfect yet, but enable scale for setting more timers.
 2. Enter a **Label** for your timer (e.g., "Coffee Break").
 3. Enter **Duration** in HH:MM or HHMM format (e.g., "0:15", "15", "1:30", "90").
 4. Check/uncheck **Enable Alarm** as desired.
