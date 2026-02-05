@@ -2,7 +2,7 @@
 Status: Release - Working.
 
 ### Description
-TimeBars is a versatile timer application featuring a modern GUI interface that allows users to create and manage a sequential queue of custom timers. It's designed for users who need to manage complex time intervals effectively—whether for work sprints, break periods, cooking stages, or gaming sessions. Each timer can be individually labeled, customized with precise durations, and set to trigger an audible and visual alarm upon completion.
+TimeBars is a versatile timer application featuring a modern GUI interface that allows users to create and manage a sequential queue of custom timers. It's designed for users who need to manage complex time intervals effectively—whether for work sprints, break periods, cooking stages, or gaming sessions. Each timer can be individually labeled, customized with precise durations, and set to trigger an audible and visual alarm upon completion. 
 
 ### Features
 - **Custom Timer Queue:** Create multiple named timers with custom durations that run sequentially in a managed queue.
@@ -93,6 +93,7 @@ Press any key to continue . . .
 ### Usage 
 Usage Guide for TimeBars:
 1. If already installed, then run `TimeBars.bat` to launch the application, and select run program from the menu.
+2. Hold Ctrl + Mouse Wheel to resize UI, as well as move borders, this is not perfect yet, but enable scale for setting more timers.
 2. Enter a **Label** for your timer (e.g., "Coffee Break").
 3. Enter **Duration** in HH:MM or HHMM format (e.g., "0:15", "15", "1:30", "90").
 4. Check/uncheck **Enable Alarm** as desired.
@@ -121,6 +122,7 @@ TimeBars/
 ```
 
 ### Notation
+- Its optimally for multi-screen display by defualt, though re
 - Its made/tested on 10, but supposedly if you have 7-8.1 it will fallback to system browser.
 - The application runs in a native window but uses web technologies—no browser required.
 - Timer data auto-saves when the application closes through [x] on top right, and loads timers on start..
