@@ -162,7 +162,11 @@ class TimeBarsApp:
     
     def _remove_timer(self, timer_id: str) -> None:
         """Remove a timer from the queue."""
-        # Remove from manager
+        # Store notification message before deleting UI
+        notify_msg = "Timer removed"
+        notify_type = "info"
+        
+        # Remove from manager first
         self.timer_manager.remove_timer(timer_id)
         
         # Remove UI elements
@@ -174,21 +178,33 @@ class TimeBarsApp:
         if timer_id in self._timer_labels:
             del self._timer_labels[timer_id]
         
-        ui.notify("Timer removed", type="info")
+        # Notify after cleanup, wrapped in try-except to prevent crashes
+        try:
+            ui.notify(notify_msg, type=notify_type)
+        except RuntimeError:
+            # Context may be lost, notification is non-critical
+            pass
     
     def _clear_all_clicked(self) -> None:
         """Clear all timers."""
         # Clear from manager
         self.timer_manager.clear_all()
         
-        # Remove all UI cards
-        for card in self._timer_cards.values():
-            card.delete()
+        # Remove all UI cards safely
+        for timer_id in list(self._timer_cards.keys()):
+            try:
+                self._timer_cards[timer_id].delete()
+            except RuntimeError:
+                pass  # Already deleted
+        
         self._timer_cards.clear()
         self._timer_progress.clear()
         self._timer_labels.clear()
         
-        ui.notify("All timers cleared", type="info")
+        try:
+            ui.notify("All timers cleared", type="info")
+        except RuntimeError:
+            pass
     
     def _start_clicked(self) -> None:
         """Start button clicked."""
@@ -256,7 +272,13 @@ class TimeBarsApp:
     def _on_queue_complete(self) -> None:
         """Called when all timers are done."""
         logger.info("Queue complete")
-        ui.notify("All timers complete!", type="positive")
+        # Use run_javascript for notifications from background tasks
+        # or schedule on the main thread
+        try:
+            ui.notify("All timers complete!", type="positive")
+        except RuntimeError:
+            # If context is not available, log only
+            logger.info("Queue complete notification skipped (no UI context)")
         self._update_status()
     
     def _on_state_change(self) -> None:
@@ -322,11 +344,31 @@ class TimeBarsApp:
                     border-color: #ff4444;
                 }
             }
-            body {
+            html, body {
                 background-color: #0a0a0f;
+                min-height: 100vh;
+                margin: 0;
             }
             .nicegui-content {
                 padding: 0 !important;
+                min-height: 100vh;
+                background-color: #0a0a0f;
+            }
+            .main-container {
+                min-height: 100vh;
+                background-color: #0a0a0f;
+                padding-bottom: 100px;
+            }
+            .control-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(10px);
+                padding: 16px;
+                z-index: 1000;
+                border-top: 1px solid #334155;
             }
         </style>
         <script>
@@ -346,8 +388,8 @@ class TimeBarsApp:
         </script>
         ''')
         
-        # Main container
-        with ui.column().classes('w-full min-h-screen bg-slate-900 p-4'):
+        # Main container - full height background that scales with content
+        with ui.column().classes('w-full bg-slate-900 p-4 main-container'):
             # Header
             with ui.row().classes('w-full items-center justify-between mb-4'):
                 ui.label('TimeBars').classes('text-3xl font-bold text-white')
@@ -379,15 +421,19 @@ class TimeBarsApp:
             # Timer Queue Section
             ui.label('Timer Queue').classes('text-xl font-bold text-white mt-4 mb-2')
             
-            # Container for timer cards
+            # Container for timer cards - expands to fill content
             self._container = ui.column().classes('w-full gap-2')
             
             # Load existing timers into UI
             for timer in self.timer_manager.timers:
                 self._create_timer_card(timer)
             
-            # Control Buttons
-            with ui.row().classes('w-full justify-center gap-4 mt-4 sticky bottom-4'):
+            # Spacer to ensure content doesn't get hidden behind fixed controls
+            ui.element('div').classes('h-20')
+        
+        # Control Buttons - Fixed at bottom, outside main scrollable area
+        with ui.element('div').classes('control-bar'):
+            with ui.row().classes('w-full justify-center gap-4'):
                 ui.button('Start', icon='play_arrow', on_click=self._start_clicked).props('color=positive size=lg')
                 ui.button('Pause', icon='pause', on_click=self._pause_clicked).props('color=warning size=lg')
                 ui.button('Stop', icon='stop', on_click=self._stop_clicked).props('color=negative size=lg')
