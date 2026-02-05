@@ -86,7 +86,7 @@ Press any key to continue . . .
 - Sound Output - for bleeps.
 
 ### Installation
-1. Ensure Python v3.10 or higher is installed.
+1. Ensure Python ~3.10+ is installed, testing with 3.12.4, main thing python is on Path.
 2. Run `python installer.py` to set up the virtual environment and dependencies.
 3. The installer will create `data/alarm-bleep.wav` and `data/persistent.json` automatically.
 
@@ -105,6 +105,7 @@ Usage Guide for TimeBars:
 ### File Structure
 ```
 TimeBars/
+├── TimeBars.bat          # Batch run/install launcher menu.
 ├── installer.py          # First-time setup (venv, deps, data files)
 ├── program.py            # Main entry point
 ├── scripts/
