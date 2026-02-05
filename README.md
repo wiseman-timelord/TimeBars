@@ -81,7 +81,7 @@ Press any key to continue . . .
 
 ### System Requirements 
 - Windows 10/11 - For full functionality of the built-in browser.
-- Python 3.10+ - A modern version of python, the version tested with was v3.12.4.
+- Python 3.10+ - A modern version of python, testing with v3.12.4, on system PATH.
 - 50MB disk space - AI.
 - Sound Output - for bleeps.
 
