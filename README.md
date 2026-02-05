@@ -1,5 +1,5 @@
 # TimeBars
-Status: Beta - It works, but some concerns about errors being thrown up in terminal, these will be investigated in due time.
+Status: Beta - It works more correctly now, with fixed interface, and fixed errors in terminal.
 
 ### Description
 TimeBars is a versatile timer application featuring a modern GUI interface that allows users to create and manage a sequential queue of custom timers. It's designed for users who need to manage complex time intervals effectively—whether for work sprints, break periods, cooking stages, or gaming sessions. Each timer can be individually labeled, customized with precise durations, and set to trigger an audible and visual alarm upon completion. 
