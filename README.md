@@ -92,7 +92,7 @@ Press any key to continue . . .
 
 ### Usage 
 Usage Guide for TimeBars:
-1. Run `TimeBars.bat` to launch the application.
+1. If already installed, then run `TimeBars.bat` to launch the application, and select run program from the menu.
 2. Enter a **Label** for your timer (e.g., "Coffee Break").
 3. Enter **Duration** in HH:MM or HHMM format (e.g., "0:15", "15", "1:30", "90").
 4. Check/uncheck **Enable Alarm** as desired.
