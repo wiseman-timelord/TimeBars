@@ -88,8 +88,7 @@ Press any key to continue . . .
 ### Installation
 1. Right click > Run as Admin on `TimeBars.bat`, to go to the Batch Menu.
 2. Select the Installer option to set up the virtual environment and dependencies.
-3. Ensure 
-2. The installer will create `data/alarm-bleep.wav` and `data/persistent.json` automatically.
+3. If there are any issues, they will be displayed as to why possibly, but if succes then there will be full output for successful result, and then when press enter to return to the menu. 
 
 ### Usage 
 Usage Guide for TimeBars:
