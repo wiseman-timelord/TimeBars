@@ -17,9 +17,9 @@ TimeBars is a versatile timer application featuring a modern GUI interface that 
 - **Automatic Dependency Management:** Installer handles virtual environment and all requirements automatically.
 
 ### Preview
-- The Fixed New NiceGUI interface
+- The Fixed New NiceGUI interface (v2.03)
 # ![main_windows](media/interface.jpg)
-- There is a nice batch menu to, install or launch...
+- There is a nice batch menu to, install or launch (v2.0?)...
 ```
 =============================================================================
                   _____ _                ____
@@ -46,7 +46,7 @@ TimeBars is a versatile timer application featuring a modern GUI interface that 
 Selection; Menu Options = 1-2, Exit Program = X:
 
 ```
-- The installer isnt too shabby...
+- The installer isnt too shabby (v2.0?)...
 ```
 =============================================================================
     TimeBars: Running Installer
