@@ -86,7 +86,7 @@ Press any key to continue . . .
 - Sound Output - for bleeps.
 
 ### Installation
-1. Ensure Python ~3.10+ is installed, testing with 3.12.4, main thing python is on Path.
+1. Ensure Python ~3.10+ is installed, testing with 3.12.4, main thing python is on system PATH.
 2. Run `python installer.py` to set up the virtual environment and dependencies.
 3. The installer will create `data/alarm-bleep.wav` and `data/persistent.json` automatically.
 
