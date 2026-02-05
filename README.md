@@ -2,7 +2,7 @@
 Status: Release - Working.
 
 ### Description
-TimeBars is a versatile timer application featuring a modern GUI interface that allows users to create and manage a sequential queue of custom timers. It's designed for users who need to manage complex time intervals effectively—whether for work sprints, break periods, cooking stages, or gaming sessions. Each timer can be individually labeled, customized with precise durations, and set to trigger an audible and visual alarm upon completion. Optimally one would have this on a second screen while playing "Fallout 4" or whatever is your thing.
+TimeBars is a versatile timer application featuring a modern GUI interface that allows users to create and manage a sequential queue of custom timers. It's designed for users who need to manage complex time intervals effectively—whether for work sprints, break periods, cooking stages, or gaming sessions. Each timer can be individually labeled, customized with precise durations, and set to trigger an audible and visual alarm upon completion.
 
 ### Features
 - **Custom Timer Queue:** Create multiple named timers with custom durations that run sequentially in a managed queue.
