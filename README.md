@@ -18,7 +18,7 @@ TimeBars is a versatile timer application featuring a modern GUI interface that 
 
 ### Preview
 - The Fixed New NiceGUI interface (v2.03)
-# ![main_windows](media/interface.jpg)
+![main_windows](media/interface.jpg)
 - There is a nice batch menu to, install or launch (v2.0?)...
 ```
 =============================================================================
