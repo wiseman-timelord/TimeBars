@@ -102,7 +102,7 @@ Usage Guide for TimeBars:
 7. Click **Start** to begin the countdown queue.
 8. Use **Pause** to temporarily halt, **Stop** to reset, or **Clear All** to empty the queue.
 9. Completed timers automatically disappear after their 5-second alarm phase.
-- Shortcuts; Create a shortcut to the batch, edit the shortcut, in target put `cmd /c "**full path originally present between quotations**"`, then set icon as the ico file in ".\media". This shortcut may then be put on TaskBar, enabling running the Batch menu from TaskBar.
+- Shortcuts; Create a shortcut to the batch, edit the shortcut, in target put `cmd /c "**full path originally present but in quotations**"`, then set icon as the ico file in ".\media". This shortcut may then be put on TaskBar, enabling running the Batch menu from TaskBar.
 
 ### File Structure
 ```
