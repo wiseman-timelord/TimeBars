@@ -23,27 +23,28 @@ echo.
 echo.
 echo.
 echo.
-echo.
 echo     1. Run Program
 echo.
-echo     2. Run Installer
+echo     2. Run Program (Debug)
 echo.
+echo     3. Run Installer
 echo.
 echo.
 echo.
 echo.
 echo =============================================================================
-set /p choice=Selection; Menu Options = 1-2, Exit Program = X: 
+set /p choice=Selection; Menu Options = 1-3, Exit Program = X: 
 
 if "%choice%"=="1" goto runProgram
-if "%choice%"=="2" goto runInstaller
+if "%choice%"=="2" goto runDebug
+if "%choice%"=="3" goto runInstaller
 if /i "%choice%"=="x" goto end
 echo.
 echo Invalid choice. Try again.
 timeout /t 2 /nobreak >nul
 goto menu
 
-:: Run Program
+:: Run Program (Hidden/Normal Mode)
 :runProgram
 cls
 echo =============================================================================
@@ -51,10 +52,10 @@ echo     TimeBars: Launching Program
 echo =============================================================================
 echo.
 
-:: Check if venv exists
-if not exist ".\venv\Scripts\activate.bat" (
+:: Check if venv exists (specifically pythonw for hidden mode)
+if not exist ".\venv\Scripts\pythonw.exe" (
     echo ERROR: Virtual environment not found!
-    echo Please run the installer first ^(Option 2^).
+    echo Please run the installer first ^(Option 3^).
     echo.
     pause
     goto menu
@@ -63,7 +64,6 @@ if not exist ".\venv\Scripts\activate.bat" (
 :: Check if program.py exists
 if not exist ".\program.py" (
     echo ERROR: program.py not found!
-    echo Please run the installer first ^(Option 2^).
     echo.
     pause
     goto menu
@@ -72,11 +72,53 @@ if not exist ".\program.py" (
 echo Activating virtual environment...
 call ".\venv\Scripts\activate.bat"
 
-echo Starting TimeBars...
+echo Starting TimeBars (Hidden Mode)...
 echo.
 
-:: Run the program
-python ".\program.py" 2>>".\Errors-Crash.Log"
+:: FIX: Removed /WAIT to allow batch to close immediately
+:: FIX: Used /b to run in background without new window
+start "" /b ".\venv\Scripts\pythonw.exe" ".\program.py" 2>>".\Errors-Crash.Log"
+
+:: Wait briefly to ensure launch initiates
+timeout /t 2 /nobreak >nul
+
+:: Exit batch script completely (does not return to menu)
+:: exit /b ensures we don't close the parent CMD if launched from one
+exit /b
+
+:: Run Program with Debug (Visible Console)
+:runDebug
+cls
+echo =============================================================================
+echo     TimeBars: Launching Program (Debug Mode)
+echo =============================================================================
+echo.
+
+:: Check if venv exists
+if not exist ".\venv\Scripts\activate.bat" (
+    echo ERROR: Virtual environment not found!
+    echo Please run the installer first ^(Option 3^).
+    echo.
+    pause
+    goto menu
+)
+
+:: Check if program.py exists
+if not exist ".\program.py" (
+    echo ERROR: program.py not found!
+    echo.
+    pause
+    goto menu
+)
+
+echo Activating virtual environment...
+call ".\venv\Scripts\activate.bat"
+
+echo Starting TimeBars (Debug Mode)...
+echo.
+
+:: Run the program using python.exe (Visible console)
+python ".\program.py"
 
 echo.
 echo Program exited.
@@ -129,4 +171,5 @@ goto menu
 echo.
 echo Exiting TimeBars...
 timeout /t 1 /nobreak >nul
-exit
+:: exit /b returns to parent CMD if launched from one, otherwise closes window
+exit /b
