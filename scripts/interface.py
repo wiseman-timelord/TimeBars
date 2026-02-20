@@ -3,12 +3,17 @@ TimeBars Interface Module
 NiceGUI-based user interface for the timer application.
 """
 
+import os
+import threading
+import time
+import socket
+import webview
 import asyncio
 import logging
 from pathlib import Path
 from typing import Optional
 
-from nicegui import ui
+from nicegui import ui, app
 
 from .config import PersistenceManager, TimerData
 from .utility import AudioManager
@@ -442,37 +447,135 @@ class TimeBarsApp:
 
 def run_app(data_path: Path, native: bool = True, port: int = 8080) -> None:
     """Run the TimeBars application."""
-    from nicegui import app
     
-    # Store app instance at module level for shutdown access
+    # Compute path to custom icon
+    icon_path = Path(__file__).parent.parent / "media" / "application_icon.ico"
+    icon_path_str = str(icon_path.resolve()) if icon_path.exists() else None
+    
+    # Holder for app instance so shutdown can save data
     app_instance_holder = {'instance': None}
     
-    # Define the main page - all UI must be inside this function
     @ui.page('/')
     def main_page():
-        # Set dark mode inside page context
         ui.dark_mode(True)
         
         app_instance = TimeBarsApp(data_path)
         app_instance.load_data()
         app_instance.build_ui()
         
-        # Store reference for shutdown
         app_instance_holder['instance'] = app_instance
     
-    # Save data on shutdown
+    # Save data on server shutdown (works in standard NiceGUI mode)
     @app.on_shutdown
     def shutdown():
         if app_instance_holder['instance']:
-            logger.info("Saving data on shutdown...")
+            logger.info("Saving data on server shutdown...")
             app_instance_holder['instance'].save_data()
     
-    # Run NiceGUI with native mode (uses Edge WebView2 on Windows)
-    ui.run(
-        title='TimeBars',
-        native=native,
-        window_size=(800, 700) if native else None,
-        reload=False,
-        port=port,
-        show=True,
-    )
+    # Custom native mode with manual icon setting on Windows
+    if native and icon_path_str:
+        def start_server():
+            ui.run(
+                title='TimeBars',
+                native=False,
+                host='127.0.0.1',
+                port=port,
+                reload=False,
+                show=False,
+            )
+        
+        server_thread = threading.Thread(target=start_server)
+        server_thread.daemon = True
+        server_thread.start()
+        
+        # Wait for server to be ready
+        start_time = time.time()
+        while time.time() - start_time < 10:
+            try:
+                with socket.create_connection(('127.0.0.1', port)):
+                    break
+            except OSError:
+                time.sleep(0.1)
+        else:
+            raise TimeoutError("Failed to start NiceGUI server within 10 seconds")
+        
+        # Create the native window (no 'icon' parameter)
+        window = webview.create_window(
+            title='TimeBars',
+            url=f'http://127.0.0.1:{port}',
+            width=800,
+            height=700,
+            resizable=True,
+        )
+        
+        # Save data when window is closed
+        def on_closed():
+            if app_instance_holder['instance']:
+                logger.info("Saving data on window close...")
+                app_instance_holder['instance'].save_data()
+        
+        window.events.closed += on_closed
+        
+        # --- Custom icon setting on Windows only ---
+        if os.name == 'nt':
+            import ctypes
+            
+            user32 = ctypes.windll.user32
+            
+            def apply_custom_icon():
+                time.sleep(2.0)  # Wait for window to fully appear
+                
+                hwnd = None
+                title_p = ctypes.c_wchar_p("TimeBars")
+                
+                for _ in range(40):  # Try for up to 20 seconds
+                    hwnd = user32.FindWindowW(None, title_p)
+                    if hwnd:
+                        break
+                    time.sleep(0.5)
+                
+                if not hwnd:
+                    logger.warning("Could not find TimeBars window to apply custom icon")
+                    return
+                
+                # Constants
+                IMAGE_ICON = 1
+                LR_LOADFROMFILE = 0x00000010
+                WM_SETICON = 0x0080
+                ICON_SMALL = 0
+                ICON_BIG = 1
+                
+                path_p = ctypes.c_wchar_p(icon_path_str)
+                
+                # Large icon (taskbar / alt-tab)
+                cx = user32.GetSystemMetrics(11)  # SM_CXICON
+                cy = user32.GetSystemMetrics(12)  # SM_CYICON
+                hbig = user32.LoadImageW(None, path_p, IMAGE_ICON, cx, cy, LR_LOADFROMFILE)
+                if hbig:
+                    user32.SendMessageW(hwnd, WM_SETICON, ICON_BIG, hbig)
+                
+                # Small icon (title bar)
+                cx_small = user32.GetSystemMetrics(49)  # SM_CXSMICON
+                cy_small = user32.GetSystemMetrics(50)  # SM_CYSMICON
+                hsmall = user32.LoadImageW(None, path_p, IMAGE_ICON, cx_small, cy_small, LR_LOADFROMFILE)
+                if hsmall:
+                    user32.SendMessageW(hwnd, WM_SETICON, ICON_SMALL, hsmall)
+                
+                logger.info("Custom application icon applied to window and taskbar")
+            
+            threading.Thread(target=apply_custom_icon, daemon=True).start()
+        # ------------------------------------------------
+        
+        webview.start()
+    
+    else:
+        # Standard NiceGUI behavior (fallback)
+        ui.run(
+            title='TimeBars',
+            native=native,
+            window_size=(800, 700) if native else None,
+            reload=False,
+            port=port,
+            show=True,
+            favicon=icon_path_str,  # Sets browser tab icon if running in browser mode
+        )

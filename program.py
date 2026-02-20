@@ -9,6 +9,7 @@ import os
 import logging
 from pathlib import Path
 from multiprocessing import freeze_support
+import ctypes  # Required for setting the Taskbar App ID on Windows
 
 # Set up basic logging early
 _log_setup_done = False
@@ -34,6 +35,18 @@ def main() -> int:
     """Main entry point for TimeBars application."""
     setup_logging()
     logger = logging.getLogger(__name__)
+    
+    # ============================================================
+    # FIX: Set AppUserModelID for Windows Taskbar Icon
+    # This ensures the custom icon appears in the taskbar 
+    # instead of the default Python icon.
+    # ============================================================
+    if os.name == 'nt':
+        try:
+            app_id = "TimeBars.Application.1.0"
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
+        except Exception as e:
+            logger.warning(f"Could not set AppUserModelID: {e}")
     
     # Check if this is the first run (not a subprocess reload)
     is_main = os.environ.get('TIMEBARS_SUBPROCESS') != '1'
