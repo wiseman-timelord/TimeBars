@@ -48,19 +48,14 @@ class TimeBarsApp:
         self.timer_manager.on_state_change = self._on_state_change
     
     def load_data(self) -> None:
-        """Load saved data and populate timer manager."""
+        """Load saved settings and ensure timer queue starts empty."""
         self.persistence.load()
-        
-        # Add saved timers to manager
-        for timer_data in self.persistence.timer_queue:
-            self.timer_manager.add_timer_from_data(
-                id=timer_data.id,
-                label=timer_data.label,
-                duration_seconds=timer_data.duration_seconds,
-                alarm_enabled=timer_data.alarm_enabled
-            )
-        
-        logger.info(f"Loaded {len(self.timer_manager.timers)} timers")
+        # ------------------------------------------------------------------
+        # UPDATE 1: Always start with a blank queue — do not carry timers
+        # over from the previous session.  (Equivalent to clicking Clear.)
+        # ------------------------------------------------------------------
+        self.persistence.clear_timers()
+        logger.info("Timer queue cleared for fresh session")
     
     def save_data(self) -> None:
         """Save current timer queue to persistence (only non-complete timers)."""
@@ -210,7 +205,69 @@ class TimeBarsApp:
             ui.notify("All timers cleared", type="info")
         except RuntimeError:
             pass
-    
+
+    # ------------------------------------------------------------------
+    # UPDATE 2: Save / Load preset buttons
+    # ------------------------------------------------------------------
+    def _save_preset_clicked(self) -> None:
+        """Save the current timer queue as the single preset."""
+        if not self.timer_manager.timers:
+            ui.notify("No timers to save", type="warning")
+            return
+
+        timer_data_list = [
+            TimerData(
+                id=t.id,
+                label=t.label,
+                duration_seconds=t.duration_seconds,
+                alarm_enabled=t.alarm_enabled
+            )
+            for t in self.timer_manager.timers
+        ]
+
+        if self.persistence.save_preset(timer_data_list):
+            ui.notify("Preset saved", type="positive")
+        else:
+            ui.notify("Failed to save preset", type="negative")
+
+    def _load_preset_clicked(self) -> None:
+        """Load the single preset and replace the current queue."""
+        preset_timers = self.persistence.load_preset()
+
+        if not preset_timers:
+            ui.notify("No preset found", type="warning")
+            return
+
+        # Stop anything currently running
+        self.timer_manager.stop()
+        self._flash_active = False
+
+        # Tear down existing UI cards
+        for timer_id in list(self._timer_cards.keys()):
+            try:
+                self._timer_cards[timer_id].delete()
+            except RuntimeError:
+                pass
+
+        self._timer_cards.clear()
+        self._timer_progress.clear()
+        self._timer_labels.clear()
+
+        # Replace manager queue
+        self.timer_manager.clear_all()
+        for timer_data in preset_timers:
+            timer = self.timer_manager.add_timer_from_data(
+                id=timer_data.id,
+                label=timer_data.label,
+                duration_seconds=timer_data.duration_seconds,
+                alarm_enabled=timer_data.alarm_enabled
+            )
+            self._create_timer_card(timer)
+
+        self._update_status()
+        ui.notify(f"Loaded {len(preset_timers)} timers from preset", type="positive")
+    # ------------------------------------------------------------------
+
     def _start_clicked(self) -> None:
         """Start button clicked."""
         if self.timer_manager.start():
@@ -442,7 +499,13 @@ class TimeBarsApp:
                 ui.button('Start', icon='play_arrow', on_click=self._start_clicked).props('color=positive size=lg')
                 ui.button('Pause', icon='pause', on_click=self._pause_clicked).props('color=warning size=lg')
                 ui.button('Stop', icon='stop', on_click=self._stop_clicked).props('color=negative size=lg')
-                ui.button('Clear All', icon='delete_sweep', on_click=self._clear_all_clicked).props('color=grey size=lg')
+                ui.button('Clear', icon='delete_sweep', on_click=self._clear_all_clicked).props('color=grey size=lg')
+                # ------------------------------------------------------------------
+                # UPDATE 2: Save & Load preset buttons
+                # ------------------------------------------------------------------
+                ui.button('Save', icon='save', on_click=self._save_preset_clicked).props('color=info size=lg')
+                ui.button('Load', icon='folder_open', on_click=self._load_preset_clicked).props('color=info size=lg')
+                # ------------------------------------------------------------------
 
 
 def run_app(data_path: Path, native: bool = True, port: int = 8080) -> None:

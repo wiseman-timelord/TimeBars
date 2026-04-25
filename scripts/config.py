@@ -51,6 +51,7 @@ class PersistenceManager:
     def __init__(self, data_path: Path):
         self.data_path = data_path
         self.json_path = data_path / "persistent.json"
+        self.preset_path = data_path / "preset.json"
         self._settings: Settings = Settings()
         self._timer_queue: list[TimerData] = []
         
@@ -149,3 +150,37 @@ class PersistenceManager:
         """Replace the entire timer queue."""
         self._timer_queue = timers
         self.save()
+
+    # ------------------------------------------------------------------
+    # Preset Save / Load (single file, no dialog)
+    # ------------------------------------------------------------------
+    def save_preset(self, timers: list[TimerData]) -> bool:
+        """Save a timer preset to preset.json."""
+        try:
+            data = {"timer_queue": [asdict(t) for t in timers]}
+            self.preset_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(self.preset_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2)
+            logger.info(f"Saved preset with {len(timers)} timers")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to save preset: {e}")
+            return False
+
+    def load_preset(self) -> list[TimerData]:
+        """Load a timer preset from preset.json."""
+        try:
+            if not self.preset_path.exists():
+                logger.info("No preset file found")
+                return []
+            with open(self.preset_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            timers = []
+            if 'timer_queue' in data:
+                for timer_data in data['timer_queue']:
+                    timers.append(TimerData.from_dict(timer_data))
+            logger.info(f"Loaded preset with {len(timers)} timers")
+            return timers
+        except Exception as e:
+            logger.error(f"Failed to load preset: {e}")
+            return []
