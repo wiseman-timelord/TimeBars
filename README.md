@@ -2,7 +2,7 @@
 Status: Beta - It works more correctly now, with fixed interface, and fixed errors in terminal.
 
 ### Description
-TimeBars is a versatile timer application featuring a modern GUI interface that allows users to create and manage a sequential queue of custom timers. It's designed for users who need to manage complex time intervals effectively—whether for work sprints, break periods, cooking stages, or gaming sessions. Each timer can be individually labeled, customized with precise durations, and set to trigger an audible and visual alarm upon completion. 
+TimeBars is a versatile timer application featuring a modern GUI interface that allows users to create and manage a sequential queue of custom timers. It's designed for users who need to manage complex time intervals effectively—whether for work sprints, break periods, cooking stages, or gaming sessions. Each timer can be individually labeled, customized with precise durations, and set to trigger an audible and visual alarm upon completion. Furthermore and for example, this program can be used to treat computer game addiction, or any computer based addiction, such as youtube, where one would setup a program such as in the image, and then do whatever for what they consider to be the minimum session length, then get on with next task, tidy room would be example, but could be an idea to genericise the name of the second activity, either way, the program allows one to still do what they like, while getting chors done, when used as such. 
 
 ### Features
 - **Custom Timer Queue:** Create multiple named timers with custom durations that run sequentially in a managed queue.
