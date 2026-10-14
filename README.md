@@ -128,5 +128,9 @@ TimeBars/
 - The application runs in a native window but uses web technologies—no browser required.
 - Timer data auto-saves when the application closes through [x] on top right, and loads timers on start..
 
+### Development
+- Move around and re-order tasks by clicking and holding with left mouse.
+- Edit titles and times of timers, for currently set tasks.
+
 ### Disclaimer
 This software is subject to the terms in License.Txt, covering usage, distribution, and modifications. For full details on your rights and obligations, refer to License.Txt.
