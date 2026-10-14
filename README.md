@@ -131,6 +131,9 @@ TimeBars/
 ### Development
 - Move around and re-order tasks by clicking and holding with left mouse.
 - Edit titles and times of timers, for currently set tasks.
+- Play should be shown dynamically ONLY when Paused or Stopped.
+- Pause should be shown dynamically ONLY when Playing.
+- Stop should be shown dynamically ONLY when Playing or Paused.
 
 ### Disclaimer
 This software is subject to the terms in License.Txt, covering usage, distribution, and modifications. For full details on your rights and obligations, refer to License.Txt.
