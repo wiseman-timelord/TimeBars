@@ -17,13 +17,15 @@ class Settings:
     default_alarm_enabled: bool = True
     alarm_duration_seconds: int = 5
     flash_on_alarm: bool = True
+    alarm_volume: float = 0.7  # 0.0 – 1.0
     
     @classmethod
     def from_dict(cls, data: dict) -> 'Settings':
         return cls(
             default_alarm_enabled=data.get('default_alarm_enabled', True),
             alarm_duration_seconds=data.get('alarm_duration_seconds', 5),
-            flash_on_alarm=data.get('flash_on_alarm', True)
+            flash_on_alarm=data.get('flash_on_alarm', True),
+            alarm_volume=float(data.get('alarm_volume', 0.7)),
         )
 
 

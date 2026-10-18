@@ -42,6 +42,7 @@ class AudioManager:
             
         self._stop_event = threading.Event()
         self._playback_thread: Optional[threading.Thread] = None
+        self.volume: float = 0.7  # 0.0 – 1.0, applied by scaling PCM amplitude
         
     def _check_alarm_file(self) -> bool:
         """Check if alarm file exists."""
@@ -50,57 +51,50 @@ class AudioManager:
         logger.warning(f"Alarm file not found: {self.alarm_path}")
         return False
     
-    def _convert_stereo_to_mono(self, input_path: Path) -> bytes:
+    def _prepare_alarm_wav(self, input_path: Path) -> bytes:
         """
-        Convert stereo 44.1kHz WAV to mono format that winsound handles correctly.
-        Returns bytes of converted WAV data.
+        Convert stereo → mono and scale amplitude by self.volume.
+        Returns bytes of a mono WAV suitable for winsound.PlaySound(SND_MEMORY).
         """
         try:
             with wave.open(str(input_path), 'rb') as wav_in:
-                # Get input parameters
                 n_channels = wav_in.getnchannels()
                 sample_width = wav_in.getsampwidth()
                 framerate = wav_in.getframerate()
                 n_frames = wav_in.getnframes()
-                
-                # Read all frames
                 frames = wav_in.readframes(n_frames)
-                
-                # If already mono, return original file bytes
-                if n_channels == 1:
-                    with open(input_path, 'rb') as f:
-                        return f.read()
-                
-                # Convert stereo to mono by averaging channels
-                # For 16-bit samples, each sample is 2 bytes
-                if sample_width == 2:
-                    # Convert bytes to array of signed shorts
-                    stereo_data = array.array('h', frames)
-                    mono_data = array.array('h')
-                    
-                    # Average left and right channels (stereo interleaved: L,R,L,R...)
-                    for i in range(0, len(stereo_data), 2):
-                        left = stereo_data[i]
-                        right = stereo_data[i + 1]
-                        mono_data.append((left + right) // 2)
-                    
-                    # Create output WAV in memory
-                    output = io.BytesIO()
-                    with wave.open(output, 'wb') as wav_out:
-                        wav_out.setnchannels(1)  # Mono
-                        wav_out.setsampwidth(sample_width)
-                        wav_out.setframerate(framerate)
-                        wav_out.writeframes(mono_data.tobytes())
-                    
-                    return output.getvalue()
+
+            vol = max(0.0, min(1.0, float(self.volume)))
+
+            if sample_width == 2:
+                data = array.array('h', frames)
+                if n_channels == 2:
+                    mono = array.array('h')
+                    for i in range(0, len(data), 2):
+                        left = data[i]
+                        right = data[i + 1]
+                        sample = (left + right) // 2
+                        mono.append(int(sample * vol))
+                    out_frames = mono.tobytes()
                 else:
-                    # For other bit depths, just return original
-                    with open(input_path, 'rb') as f:
-                        return f.read()
-                    
+                    for i in range(len(data)):
+                        data[i] = int(data[i] * vol)
+                    out_frames = data.tobytes()
+
+                output = io.BytesIO()
+                with wave.open(output, 'wb') as wav_out:
+                    wav_out.setnchannels(1)
+                    wav_out.setsampwidth(sample_width)
+                    wav_out.setframerate(framerate)
+                    wav_out.writeframes(out_frames)
+                return output.getvalue()
+            else:
+                # Unsupported bit-depth – return original
+                with open(input_path, 'rb') as f:
+                    return f.read()
+
         except Exception as e:
-            logger.error(f"Failed to convert audio: {e}")
-            # Return original file content as fallback
+            logger.error(f"Failed to prepare alarm audio: {e}")
             with open(input_path, 'rb') as f:
                 return f.read()
     
@@ -112,10 +106,7 @@ class AudioManager:
             
         if self._check_alarm_file():
             try:
-                # Convert stereo to mono for proper playback speed
-                mono_data = self._convert_stereo_to_mono(self.alarm_path)
-                
-                # Play from memory buffer
+                mono_data = self._prepare_alarm_wav(self.alarm_path)
                 winsound.PlaySound(
                     mono_data,
                     winsound.SND_MEMORY | winsound.SND_NODEFAULT

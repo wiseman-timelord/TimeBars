@@ -142,6 +142,39 @@ class TimerManager:
                 self._notify_state_change()
                 return True
         return False
+
+    def reorder(self, ordered_ids: list[str]) -> None:
+        """Reorder the timer queue to match the given list of timer IDs."""
+        id_to_timer = {t.id: t for t in self._timers}
+        new_list = []
+        for tid in ordered_ids:
+            if tid in id_to_timer:
+                new_list.append(id_to_timer.pop(tid))
+        # Append any remaining (shouldn't normally happen)
+        new_list.extend(id_to_timer.values())
+        self._timers = new_list
+        logger.info(f"Reordered queue: {[t.label for t in self._timers]}")
+        self._notify_state_change()
+
+    def update_timer(self, timer_id: str, label: str = None, duration_seconds: int = None) -> bool:
+        """Update label and/or duration of an existing timer. Resets remaining if duration changes."""
+        for timer in self._timers:
+            if timer.id == timer_id:
+                if label is not None:
+                    timer.label = label
+                if duration_seconds is not None and duration_seconds > 0:
+                    # Preserve progress ratio if currently running/paused
+                    if timer.duration_seconds > 0 and timer.state in (TimerState.RUNNING, TimerState.PAUSED):
+                        ratio = timer.remaining_seconds / timer.duration_seconds
+                        timer.duration_seconds = duration_seconds
+                        timer.remaining_seconds = max(1, int(duration_seconds * ratio))
+                    else:
+                        timer.duration_seconds = duration_seconds
+                        timer.remaining_seconds = duration_seconds
+                logger.info(f"Updated timer {timer_id}: label={timer.label}, duration={timer.duration_display}")
+                self._notify_state_change()
+                return True
+        return False
     
     def clear_all(self) -> None:
         """Clear all timers and stop."""
