@@ -97,7 +97,7 @@ Usage Guide for TimeBars:
 3. Enter a **Label** for your timer (e.g., "Coffee Break"), **Duration** in HH:MM or HHMM format (e.g., "0:15", "15", "1:30", "90"). Check/uncheck **Enable Alarm** as desired.
 4. Click **Add Timer** to append it to the queue. Repeat steps 2-5 to build your timer sequence.
 5. Click **Start** to begin the countdown queue. Completed timers automatically disappear after their 5-second alarm phase.
-- Set volume to not 100%, unless thats what you want.
+- Set volume to not 100%, unless thats what you want. the 100% can, melt ears with headphones on and break screen recording audio.
 - Use **Pause** to temporarily halt, **Stop** to reset, or **Clear All** to empty the queue.
 
 ### File Structure
