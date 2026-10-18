@@ -94,8 +94,8 @@ echo     TimeBars: Launching Program (Debug Mode)
 echo =============================================================================
 echo.
 
-:: Check if venv exists
-if not exist ".\venv\Scripts\activate.bat" (
+:: Check if venv exists (python.exe required for visible console)
+if not exist ".\venv\Scripts\python.exe" (
     echo ERROR: Virtual environment not found!
     echo Please run the installer first ^(Option 3^).
     echo.
@@ -115,13 +115,16 @@ echo Activating virtual environment...
 call ".\venv\Scripts\activate.bat"
 
 echo Starting TimeBars (Debug Mode)...
+echo Logs will appear in this window. Close the TimeBars window to return here.
 echo.
 
-:: Run the program using python.exe (Visible console)
-python ".\program.py"
+:: Run with explicit venv python.exe so the console stays open and
+:: the correct interpreter (with NiceGUI etc.) is always used.
+:: (Bare "python" after activate can resolve to system Python or fail.)
+".\venv\Scripts\python.exe" -u ".\program.py"
 
 echo.
-echo Program exited.
+echo Program exited. ERRORLEVEL=%ERRORLEVEL%
 call deactivate 2>nul
 echo.
 echo Returning to menu...
