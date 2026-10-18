@@ -92,17 +92,13 @@ Press any key to continue . . .
 
 ### Usage 
 Usage Guide for TimeBars:
-1. If already installed, then right click then run as admin on `TimeBars.bat` to launch batch menu, and select run program from the menu.
-2. Wait for Ui load, Hold Ctrl + Mouse Wheel to resize UI, as well as move borders, this is not perfect but is the current state of the lightweight GUI option in the installer.
-2. Enter a **Label** for your timer (e.g., "Coffee Break").
-3. Enter **Duration** in HH:MM or HHMM format (e.g., "0:15", "15", "1:30", "90").
-4. Check/uncheck **Enable Alarm** as desired.
-5. Click **Add Timer** to append it to the queue.
-6. Repeat steps 2-5 to build your timer sequence.
-7. Click **Start** to begin the countdown queue.
-8. Use **Pause** to temporarily halt, **Stop** to reset, or **Clear All** to empty the queue.
-9. Completed timers automatically disappear after their 5-second alarm phase.
-- Shortcuts; Create a shortcut to the batch, edit the shortcut, in target put `cmd /c "**full path originally present but in quotations**"`, then set icon as the ico file in ".\media". This shortcut may then be put on TaskBar, enabling running the Batch menu from TaskBar.
+1. Right click then run as admin on `TimeBars.bat` to launch batch menu, and select `1` to run program from the menu. 
+2. Wait for Ui load, Hold Ctrl + Mouse Wheel to resize UI, as well as move borders.
+3. Enter a **Label** for your timer (e.g., "Coffee Break"), **Duration** in HH:MM or HHMM format (e.g., "0:15", "15", "1:30", "90"). Check/uncheck **Enable Alarm** as desired.
+4. Click **Add Timer** to append it to the queue. Repeat steps 2-5 to build your timer sequence.
+5. Click **Start** to begin the countdown queue. Completed timers automatically disappear after their 5-second alarm phase.
+- Set volume to not 100%, unless thats what you want.
+- Use **Pause** to temporarily halt, **Stop** to reset, or **Clear All** to empty the queue.
 
 ### File Structure
 ```
@@ -123,6 +119,7 @@ TimeBars/
 ```
 
 ### Notation
+- Shortcuts; Create a shortcut to the batch, edit the shortcut, in target put `cmd /c "**full path originally present but in quotations**"`, then set icon as the ico file in ".\media". This shortcut may then be put on TaskBar, enabling running the Batch menu from TaskBar.
 - Its optimally for multi-screen display by defualt, though re
 - Its made/tested on 10, but supposedly if you have 7-8.1 it will fallback to system browser.
 - The application runs in a native window but uses web technologies—no browser required.
