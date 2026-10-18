@@ -6,7 +6,7 @@ TimeBars is a versatile timer application featuring a modern GUI interface that 
 
 ### Media
 - Theres a Demonstration Video on Youtube...
-![NConvert-Batch on YouTube](./media/wisetime_youtube.jpg)](https://www.youtube.com/watch?v=DrsbH3_vwmc)
+![./media/wisetime_youtube.jpg](https://www.youtube.com/watch?v=DrsbH3_vwmc)
 
 ### Features
 - **Custom Timer Queue:** Create multiple named timers with custom durations that run sequentially in a managed queue.
