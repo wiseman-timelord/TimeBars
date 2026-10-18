@@ -20,7 +20,7 @@ TimeBars is a versatile timer application featuring a modern GUI interface that 
 - The NiceGUI interface showing the new upgraded interface (v2.08)
 ![main_windows](media/interface.jpg)
 - Demonstration Video on YouTube
-[![Demonstration Video on YouTube](https://github.com/wiseman-timelord/TimeBars/blob/main/media/wisetime_youtube.jpg?raw=true)](https://www.youtube.com/watch?v=DrsbH3_vwmc)
+<br> [![Demonstration Video on YouTube](https://github.com/wiseman-timelord/TimeBars/blob/main/media/wisetime_youtube.jpg?raw=true)](https://www.youtube.com/watch?v=DrsbH3_vwmc)
 
 - There is a nice batch menu to, install or launch (v2.0?)...
 ```
